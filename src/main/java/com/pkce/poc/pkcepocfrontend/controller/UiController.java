@@ -27,7 +27,7 @@ class UiController {
 	}
 
 	@GetMapping("/setup")
-	public String setup(Model model, HttpServletRequest request) {
+	public String setup(Model model) {
 		model.addAttribute("client", new Client());
 		return "setup";
 	}
@@ -46,22 +46,9 @@ class UiController {
 		return "relogin";
 	}
 
-	@GetMapping("/account")
-	public String account() {
-
-		//String todoUri = linkTo(getClass()).toUriComponentsBuilder().path("/home").toUriString();
-		//return "redirect:" + keycloakLinkGenerator.createAccountLinkWithBacklink(todoUri);
-		return null;
-	}
-
 	@GetMapping("/home")
-	public String home(Model model, @AuthenticationPrincipal Principal currentUser) {
-
-		//Resources<Resource<Todo>> todos = todoClient.fetchTodos();
-		//model.addAttribute("todos", todos.getContent());
-
-//		KeycloakAuthenticationToken keycloakUser = (KeycloakAuthenticationToken) currentUser;
-//		System.out.printf("Current user roles: %s%n", keycloakUser.getAuthorities());
+	//public String home(Model model, @AuthenticationPrincipal Principal currentUser) {
+	public String home() {
 
 		return "home";
 	}
