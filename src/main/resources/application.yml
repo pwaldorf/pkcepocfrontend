@@ -20,3 +20,12 @@ spring:
           keycloak:
             issuerUri: http://192.168.4.86:8080/auth/realms/TestPKCE
             user-name-attribute: preferred_username
+
+keycloak:
+  token:
+    url: http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/token
+  client:
+    create:
+      url: http://192.168.4.64:8081/client/registration
+    id: test-admin-cli
+    secret: f5a46a69-fed3-4e7d-85e8-7981ca06b897

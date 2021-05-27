@@ -1,7 +1,9 @@
 package com.pkce.poc.pkcepocfrontend.service;
 
-import com.oint.poc.auth.OnyxIntegratorAuthClient;
-import com.oint.poc.constants.OnyxIntegratorConstants;
+import com.pkce.poc.pkcepocfrontend.auth.OnyxIntegratorAuthClient;
+import com.pkce.poc.pkcepocfrontend.constants.OnyxIntegratorConstants;
+import com.pkce.poc.pkcepocfrontend.model.Client;
+import com.pkce.poc.pkcepocfrontend.model.NewClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +31,12 @@ public class CreateClientIdServiceImpl implements CreateClientIdService{
     private String clientCreateURL;
 
     @Override
-    public String createClientId(String inputPayload) {
+    public Object createClientId(String token, NewClient newClient) {
 
-        //Get Token move to UI
-        String token = authClient.getToken();
-
-        return createClient(token, inputPayload);
+        return createClient(token, newClient);
     }
 
-    private String createClient(String token, String inputPayload){
+    private Object createClient(String token, NewClient newClient){
         logger.info("New Client Creation");
 
         RestTemplate restTemplate = new RestTemplate();
@@ -47,25 +46,26 @@ public class CreateClientIdServiceImpl implements CreateClientIdService{
         headers.setBearerAuth(token);
         headers.add("User-Agent", "Spring's RestTemplate" );
 
-        HttpEntity<String> entity = new HttpEntity<>(inputPayload, headers);
+        HttpEntity<NewClient> entity = new HttpEntity<>(newClient, headers);
 
         ResponseEntity<Object> response =null;
 
         try {
             response = restTemplate.postForEntity(clientCreateURL, entity, Object.class);
+            logger.info("New Client: " + response);
         }catch (Exception e) {
-            logger.error("Exception occured while creating the client :{}", e.getMessage());
-            throw new RuntimeException("Exception occured creating the client ", e);
+            logger.error("Exception occurred while creating the client :{}", e.getMessage());
+            throw new RuntimeException("Exception occurred creating the client ", e);
         }
 
-        String newClient = ((Map<String, String>)response.getBody()).get(OnyxIntegratorConstants.BODY_CLIENTID);
+        String returnClient = ((Map<String, String>)response.getBody()).get(OnyxIntegratorConstants.BODY_CLIENTID);
         if (Objects.isNull(newClient)) {
             logger.error("Unable to create client");
             throw new RuntimeException("Unable to create client");
         }
 
         String newClientSecret = ((Map<String, String>)response.getBody()).get(OnyxIntegratorConstants.BODY_CLIENTSECRET);
-        logger.info("New Client " + newClient + " Secret " + newClientSecret);
-        return newClient;
+        logger.info("Return Client " + returnClient + " Secret " + newClientSecret);
+        return response.getBody();
     }
 }

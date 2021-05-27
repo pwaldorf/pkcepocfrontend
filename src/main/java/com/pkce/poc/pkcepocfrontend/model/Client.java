@@ -6,6 +6,7 @@ public class Client implements Serializable {
 
     private String clientId;
     private String initialAccessToken;
+    private String clientSecret;
 
     public Client() {
     }
@@ -28,5 +29,13 @@ public class Client implements Serializable {
 
     public void setInitialAccessToken(String initialAccessToken) {
         this.initialAccessToken = initialAccessToken;
+    }
+
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
     }
 }
