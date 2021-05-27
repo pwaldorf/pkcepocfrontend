@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::header"></head>
+<body>
+
+<!--<div th:replace="fragments::menu"/>-->
+
+<div class="container">
+    <h1>ONYX Integrator Client Setup</h1>
+
+    <form th:action="@{/home}">
+        <div class="form-group">
+            <label>Login In Again</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+server:
+  port: 20001
+  base:
+    url: http://192.168.4.64:20001
+
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: 'test-client-1'
+            client-secret: '7b756b50-aaad-45ea-940e-e9a9d5b9bd40'
+            authorizationGrantType: authorization_code
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: openid
+        provider:
+          keycloak:
+            issuerUri: http://192.168.4.86:8080/auth/realms/TestPKCE
+            user-name-attribute: preferred_username
