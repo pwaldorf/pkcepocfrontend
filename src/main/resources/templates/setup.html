@@ -8,7 +8,7 @@
 <div class="container">
     <h1>ONYX Integrator Client Setup</h1>
 
-    <form th:action="@{/create-client}" th:object="${client}" method="post" modelAttribute="client">
+    <form th:action="@{/admin/create-client}" th:object="${client}" method="post" modelAttribute="client">
         <div class="form-group">
              <label>Enter Client ID</label>
              <input type="text" class="form-control" th:field="*{clientId}">

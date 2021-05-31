@@ -11,8 +11,8 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: 'test-client-1'
-            client-secret: '7b756b50-aaad-45ea-940e-e9a9d5b9bd40'
+            client-id: test-resource-public
+            client-authentication-method: none
             authorizationGrantType: authorization_code
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: openid
@@ -24,8 +24,14 @@ spring:
 keycloak:
   token:
     url: http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/token
+  auth:
+    url: http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/auth
   client:
     create:
       url: http://192.168.4.64:8081/client/registration
     id: test-admin-cli
     secret: f5a46a69-fed3-4e7d-85e8-7981ca06b897
+  resource:
+    id: test-resource-1
+    secret: e175060f-2f3a-47b0-9c50-ffbc441bb4d0
+    redirect-uri: http://192.168.4.64:20001

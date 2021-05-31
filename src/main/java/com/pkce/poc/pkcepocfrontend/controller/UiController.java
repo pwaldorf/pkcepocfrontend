@@ -36,14 +36,14 @@ class UiController {
 		return "home";
 	}
 
-	@GetMapping("/setup")
+	@GetMapping("/admin/setup")
 	public String setup(Model model) {
 		model.addAttribute("client", new Client());
 		return "setup";
 	}
 
 	// Add service to create client here
-	@PostMapping("/create-client")
+	@PostMapping("/admin/create-client")
 	public String createClientForm(@ModelAttribute Client client) {
 
 		NewClient newClient = new NewClient();

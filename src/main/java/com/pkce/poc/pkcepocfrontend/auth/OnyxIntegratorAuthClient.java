@@ -18,6 +18,18 @@ public class OnyxIntegratorAuthClient {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Value("${keycloak.auth.url}")
+    private String authURL;
+
+    @Value("${keycloak.resource.id}")
+    private String resourceId;
+
+    @Value("${keycloak.resource.secret}")
+    private String resourceSecret;
+
+    @Value("${keycloak.resource.redirect-uri}")
+    private String redirectURI;
+
     @Value("${keycloak.token.url}")
     private String tokenURL;
 
@@ -53,6 +65,41 @@ public class OnyxIntegratorAuthClient {
         }catch (Exception e) {
             logger.error("Exception occured while generating the token :{}", e.getMessage());
             throw new RuntimeException("Exception occured while generating the token ", e);
+        }
+
+        String idToken = ((Map<String, String>)response.getBody()).get(OnyxIntegratorConstants.AUTH_ACCESS_TOKEN);
+        if (Objects.isNull(idToken)) {
+            logger.error("Unable to generate the token for client {}",  clientId);
+            throw new RuntimeException("Unble to generate the token for client "+clientId);
+        }
+
+        logger.info("bearertoken " + idToken);
+        return idToken;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String getAuthCode(){
+        logger.info("Getting Auth Code client id {}", clientId);
+
+        MultiValueMap<String, String> request = new LinkedMultiValueMap<String, String>();
+        request.add(OnyxIntegratorConstants.AUTH_RESPONSE_TYPE, OnyxIntegratorConstants.AUTH_CODE);
+        request.add(OnyxIntegratorConstants.AUTH_CLIENT_ID, resourceId);
+        request.add(OnyxIntegratorConstants.AUTH_CLIENT_SECRET, resourceSecret);
+        request.add(OnyxIntegratorConstants.AUTH_SCOPE, OnyxIntegratorConstants.AUTH_PROFILE);
+        request.add(OnyxIntegratorConstants.AUTH_STATE, OnyxIntegratorConstants.AUTH_READ);
+        request.add(OnyxIntegratorConstants.AUTH_REDIRECT_URI, redirectURI);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(request, headers);
+        ResponseEntity<Object> response =null;
+
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            response = restTemplate.exchange(authURL, HttpMethod.GET, entity, Object.class);
+        }catch (Exception e) {
+            logger.error("Exception occured while generating the auth code :{}", e.getMessage());
+            throw new RuntimeException("Exception occured while generating the auth code ", e);
         }
 
         String idToken = ((Map<String, String>)response.getBody()).get(OnyxIntegratorConstants.AUTH_ACCESS_TOKEN);
