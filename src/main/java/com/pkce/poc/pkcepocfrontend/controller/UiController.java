@@ -39,34 +39,7 @@ public class UiController {
 	@PostMapping("/admin/create-client")
 	public String createClient(@ModelAttribute Client client) {
 
-		String codeVerifier = null;
-		try {
-			codeVerifier = pkceUtil.generateCodeVerifier();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		client.setCodeVerifier(codeVerifier);
-
-		String codeChallenge = null;
-		try {
-			codeChallenge = pkceUtil.generateCodeChallange(codeVerifier);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		logger.info("Code challenge = " + codeChallenge);
-		logger.info("Code verifier = " + codeVerifier);
-
-		String authorizationLocation = "http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/auth"
-				+ "?response_type=code"
-				+ "&client_id=" + "onyx-integrator-client"
-				+ "&redirect_uri=" + "http://192.168.4.64:20001/callback"
-				+ "&scope=" + "email"
-				+ "&state=" + "12345678"
-				+ "&code_challenge=" + codeChallenge
-				+ "&code_challenge_method=S256";
-		logger.info("URL: " + authorizationLocation);
+		String authorizationLocation = createClientIdService.getAuthenticationUrl(client);
 
 		return "redirect:" + authorizationLocation;
 	}

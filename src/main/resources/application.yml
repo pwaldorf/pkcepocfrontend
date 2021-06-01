@@ -12,12 +12,9 @@ keycloak:
     url: http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/token
   auth:
     url: http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/auth
-    scope: email
-    state: 12345678
-    code-challenge: S256
-    response-type: code
   client:
     create:
-      url: http://192.168.4.64:8081/client/registration
+      url: http://192.168.4.86:8080/auth/realms/TestPKCE/clients-registrations/default
     id: onyx-integrator-client
-    redirect-uri: http://192.168.4.64:20001/callback
+    redirect:
+      url: http://192.168.4.64:20001/callback
