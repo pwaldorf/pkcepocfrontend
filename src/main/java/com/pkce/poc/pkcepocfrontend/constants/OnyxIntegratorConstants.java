@@ -19,6 +19,7 @@ public class OnyxIntegratorConstants {
     public static final String AUTH_CLIENT_SECRET = "client_secret";
     public static final String AUTH_SCOPE = "scope";
     public static final String AUTH_CODE = "code";
+    public static final String AUTH_AUTHORIZATION_CODE = "authorization_code";
     public static final String AUTH_CLIENT_CREDENTIALS = "client_credentials";
     public static final String AUTH_OPEN_ID = "openid";
     public static final String AUTH_PROFILE = "profile";

@@ -29,8 +29,9 @@ keycloak:
   client:
     create:
       url: http://192.168.4.64:8081/client/registration
-    id: test-admin-cli
+    id: admin-cli
     secret: f5a46a69-fed3-4e7d-85e8-7981ca06b897
+    redirect-uri: 'http://192.168.4.64:20001/token-callback'
   resource:
     id: test-resource-1
     secret: e175060f-2f3a-47b0-9c50-ffbc441bb4d0

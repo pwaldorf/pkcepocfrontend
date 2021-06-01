@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
-@EnableWebSecurity (debug = true)
+@EnableWebSecurity (debug = false)
 //@Order(10)
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -22,7 +22,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/relogin").permitAll()
+                //.antMatchers("/relogin", "/callback").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
                 .logout()
