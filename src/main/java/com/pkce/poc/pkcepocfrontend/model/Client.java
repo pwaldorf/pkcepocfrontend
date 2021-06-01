@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Client implements Serializable {
 
     private String clientId;
-    private String initialAccessToken;
     private String clientSecret;
+    private String codeVerifier;
 
     public Client() {
     }
@@ -23,19 +23,19 @@ public class Client implements Serializable {
         this.clientId = clientId;
     }
 
-    public String getInitialAccessToken() {
-        return initialAccessToken;
-    }
-
-    public void setInitialAccessToken(String initialAccessToken) {
-        this.initialAccessToken = initialAccessToken;
-    }
-
     public String getClientSecret() {
         return clientSecret;
     }
 
     public void setClientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
+    }
+
+    public String getCodeVerifier() {
+        return codeVerifier;
+    }
+
+    public void setCodeVerifier(String codeVerifier) {
+        this.codeVerifier = codeVerifier;
     }
 }

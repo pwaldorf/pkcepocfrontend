@@ -8,7 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 @RequestScope
 //@RequiredArgsConstructor
-public class KeycloakLinkGenerator {
+public class LinkGenerator {
 
     private static final String CLIENT_LINK_TEMPLATE = "%s/realms/%s/clients/%s/redirect";
 

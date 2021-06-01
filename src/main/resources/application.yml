@@ -6,33 +6,18 @@ server:
 spring:
   thymeleaf:
     cache: false
-  security:
-    oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: test-resource-public
-            client-authentication-method: none
-            authorizationGrantType: authorization_code
-            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
-            scope: openid
-        provider:
-          keycloak:
-            issuerUri: http://192.168.4.86:8080/auth/realms/TestPKCE
-            user-name-attribute: preferred_username
 
 keycloak:
   token:
     url: http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/token
   auth:
     url: http://192.168.4.86:8080/auth/realms/TestPKCE/protocol/openid-connect/auth
+    scope: email
+    state: 12345678
+    code-challenge: S256
+    response-type: code
   client:
     create:
       url: http://192.168.4.64:8081/client/registration
-    id: admin-cli
-    secret: f5a46a69-fed3-4e7d-85e8-7981ca06b897
-    redirect-uri: 'http://192.168.4.64:20001/token-callback'
-  resource:
-    id: test-resource-1
-    secret: e175060f-2f3a-47b0-9c50-ffbc441bb4d0
-    redirect-uri: http://192.168.4.64:20001
+    id: onyx-integrator-client
+    redirect-uri: http://192.168.4.64:20001/callback
